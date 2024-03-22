@@ -4,6 +4,7 @@ import com.svalero.filterthreads.controller.AppController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class App extends Application {
@@ -18,9 +19,12 @@ public class App extends Application {
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("mainWindow.fxml"));
         loader.setController(new AppController());
-        Scene scene = new Scene(loader.load());
+        AnchorPane anchorPane = loader.load();
+
+
+        Scene scene = new Scene(anchorPane);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Photo Filter Application.");
+        primaryStage.setTitle("Photo Filter Application");
         primaryStage.show();
     }
 

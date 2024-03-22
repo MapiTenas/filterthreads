@@ -17,7 +17,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("mainWindow.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/svalero/filterthreads/mainWindow.fxml"));
         loader.setController(new AppController());
         AnchorPane anchorPane = loader.load();
 

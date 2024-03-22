@@ -67,7 +67,7 @@ public class AppController implements Initializable{
     @FXML
     private void selectFilter(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("filterPaneWindow.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/svalero/filterthreads/filterPaneWindow.fxml"));
             System.out.println(this.choiceBoxFilters.getValue().toString());
             FilterController filterController = new FilterController(file, this.choiceBoxFilters.getValue().toString());
             loader.setController(filterController);

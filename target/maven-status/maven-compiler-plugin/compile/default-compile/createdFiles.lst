@@ -1,6 +1,0 @@
-com\svalero\filterthreads\task\FilterTask.class
-com\svalero\filterthreads\filters\BrighterFilter.class
-com\svalero\filterthreads\filters\GrayscaleFilter.class
-com\svalero\filterthreads\controller\AppController.class
-com\svalero\filterthreads\App.class
-com\svalero\filterthreads\controller\FilterController.class

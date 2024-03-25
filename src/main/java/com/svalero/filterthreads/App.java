@@ -1,7 +1,10 @@
 package com.svalero.filterthreads;
 import java.io.IOException;
 import com.svalero.filterthreads.controller.AppController;
+import com.svalero.filterthreads.utils.SplashScreen;
+
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -17,15 +20,34 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/svalero/filterthreads/mainWindow.fxml"));
-        loader.setController(new AppController());
-        AnchorPane anchorPane = loader.load();
-
-
-        Scene scene = new Scene(anchorPane);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Photo Filter Application");
-        primaryStage.show();
+        SplashScreen splashScreen = new SplashScreen();
+        splashScreen.showSplashScreen();
+        new Thread(() -> {
+            try {
+                Thread.sleep(3000); 
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Platform.runLater(() -> {
+                try {
+                    // Cerrar el Splash Screen
+                    splashScreen.closeSplashScreen();
+                    
+                    // Cargar y mostrar la ventana principal
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/svalero/filterthreads/mainWindow.fxml"));
+                    loader.setController(new AppController());
+                    AnchorPane anchorPane = loader.load();
+        
+                    Scene scene = new Scene(anchorPane);
+                    primaryStage.setScene(scene);
+                    primaryStage.setTitle("Photo Filter Application");
+                    primaryStage.show();
+                    
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        }).start();
     }
 
     @Override

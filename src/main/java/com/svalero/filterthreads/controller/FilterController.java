@@ -106,11 +106,17 @@ public class FilterController implements Initializable {
         }
     }
 
+    //Allows you to save the filtered images by choosing the path. There is one path by default. Photos have a new name by default.
     @FXML
     private void saveFilteredImage(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save filtered image");
+        fileChooser.setInitialDirectory(new File("C:\\Users\\mapit\\Desktop\\FilteredPhotos"));
         Stage stage = (Stage) this.saveButton.getScene().getWindow();
+        String fileName = this.sourceImage.getName().replaceFirst("[.][^.]+$", "");
+        String extension = this.sourceImage.getName().substring(this.sourceImage.getName().lastIndexOf(".") + 1);
+        String defaultFileName = fileName + "_filtered." + extension;
+        fileChooser.setInitialFileName(defaultFileName);
         File file = fileChooser.showSaveDialog(stage);
         try {
             ImageIO.write(this.outputImage, "png", file);

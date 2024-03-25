@@ -8,6 +8,8 @@ import javax.imageio.ImageIO;
 
 import com.svalero.filterthreads.filters.BrighterFilter;
 import com.svalero.filterthreads.filters.GrayscaleFilter;
+import com.svalero.filterthreads.filters.InvertColorFilter;
+import com.svalero.filterthreads.filters.SepiaFilter;
 
 import javafx.concurrent.Task;
 import java.awt.Color;
@@ -41,7 +43,11 @@ public class FilterTask extends Task<BufferedImage> {
                     if (selectedFilter.equals("Grayscale"))
                         color = GrayscaleFilter.apply(color);
                     if (selectedFilter.equals("Brighter"))
-                        color = BrighterFilter.apply(color);   
+                        color = BrighterFilter.apply(color);
+                    if (selectedFilter.equals("InvertColor"))
+                        color = InvertColorFilter.apply(color);
+                    if (selectedFilter.equals("Sepia"))
+                        color = SepiaFilter.apply(color);          
                 }
                 if (color != null)
                     image.setRGB(x, y, color.getRGB());

@@ -58,7 +58,7 @@ public class AppController implements Initializable{
     @Override
     public void initialize (URL location, ResourceBundle resources){
         tabPaneFilter.setTabClosingPolicy(TabPane.TabClosingPolicy.ALL_TABS);
-        this.filterListView.getItems().addAll("Grayscale", "Brighter");
+        this.filterListView.getItems().addAll("Grayscale", "Brighter","InvertColor", "Sepia");
         this.filterListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE); //This allows to choose multiple filters. 
     } 
 

@@ -3,9 +3,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import javafx.collections.ObservableList;
@@ -14,13 +13,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -46,9 +45,18 @@ public class AppController implements Initializable{
     @FXML 
     private Label imagePathLabel;
 
+    @FXML
+    private Label orLabel;
+
+    @FXML 
+    private Button buttonSelectFolder;
+
+    @FXML
+    private Label folderPathLabel;
+
     ObservableList<String> selectedItems;
 
-    private File file;
+    private List<File> files;
 
     public AppController(){
 
@@ -67,24 +75,39 @@ public class AppController implements Initializable{
     public void selectImage(ActionEvent event){
         Stage stage = (Stage) this.buttonSelectImage.getScene().getWindow();
         FileChooser fc = new FileChooser();
-        this.file = fc.showOpenDialog(stage);
-        this.imagePathLabel.setText(this.file.getName());
+        File file = fc.showOpenDialog(stage);
+        this.files = new ArrayList<File>();
+        this.files.add(file);
+        this.imagePathLabel.setText(file.getName());
     }
+
+    /*Method that is executed when we clic on the Select folder button */
+    @FXML
+    public void selectFolder(ActionEvent event){
+        Stage stage = (Stage) this.buttonSelectFolder.getScene().getWindow();
+        DirectoryChooser dc = new DirectoryChooser();
+        File selectedFolder = dc.showDialog(stage);
+        this.files = new ArrayList<File>(Arrays.asList(selectedFolder.listFiles()));
+        this.folderPathLabel.setText(selectedFolder.getName());
+    }
+
 
     /*Method that is executed when clicking on the Select Filter button */
     @FXML
     private void selectFilter(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/svalero/filterthreads/filterPaneWindow.fxml"));
             System.out.println(this.filterListView.getSelectionModel().getSelectedItems());
             List<String> selectedFilters = new ArrayList<String>(this.filterListView.getSelectionModel().getSelectedItems());
-            FilterController filterController = new FilterController(file, selectedFilters);
-            loader.setController(filterController);
-            AnchorPane filterPane = loader.load();
-
-            String fileName = file.getName();
-            System.out.println(fileName);
-            tabPaneFilter.getTabs().add(new Tab(fileName, filterPane));
+            for (File file : files){
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/svalero/filterthreads/filterPaneWindow.fxml"));
+                FilterController filterController = new FilterController(file, selectedFilters);
+                loader.setController(filterController);
+                AnchorPane filterPane = loader.load();
+    
+                String fileName = file.getName();
+                System.out.println(fileName);
+                tabPaneFilter.getTabs().add(new Tab(fileName, filterPane));
+            }
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }

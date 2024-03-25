@@ -31,5 +31,16 @@
             <Font name="Calibri Light" size="14.0" />
          </font>
       </Label>
+      <Label fx:id="orLabel" layoutX="174.0" layoutY="134.0" text="or" />
+      <Button fx:id="buttonSelectFolder" layoutX="121.0" layoutY="160.0" mnemonicParsing="false" onAction="#selectFolder" prefHeight="26.0" prefWidth="131.0" text="Select your folder">
+         <font>
+            <Font name="Calibri Light" size="14.0" />
+         </font>
+      </Button>
+      <Label fx:id="folderPathLabel" layoutX="272.0" layoutY="165.0" prefHeight="18.0" prefWidth="147.0">
+         <font>
+            <Font name="Calibri Light" size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

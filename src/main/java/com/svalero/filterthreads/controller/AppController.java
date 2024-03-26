@@ -77,9 +77,8 @@ public class AppController implements Initializable{
     /*Method that opens the historic log of edits */
     public void openHistory (ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/svalero/filterthreads/historicLogs.fxml"));
+        loader.setController(new HistoryController());
         AnchorPane anchorPane = loader.load();
-        
-        HistoryController historyController = loader.getController();
 
         Stage stage = new Stage();
         stage.setScene(new Scene(anchorPane));

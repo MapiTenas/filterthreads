@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
 import javax.imageio.ImageIO;
 
 import com.svalero.filterthreads.task.FilterTask;
+import com.svalero.filterthreads.utils.HistoryUtils;
 
 import javafx.concurrent.Worker;
 import javafx.embed.swing.SwingFXUtils;
@@ -85,10 +86,13 @@ public class FilterController implements Initializable {
         
 
             filterTask.setOnSucceeded(event -> {
+                //If the task succedded, this will charge the new image in the view. 
                 this.outputImage = filterTask.getValue();
                 Image image = SwingFXUtils.toFXImage(outputImage, null);
+                this.finalImage.setImage(image); 
 
-                this.finalImage.setImage(image); //If the task succedded, this will charge the new image in the view. 
+                //Next, store a log in the app's history 
+                HistoryUtils.saveHistory(sourceImage.getName(), selectedFilters.toString());
             });
 
             /*Actualizes the progress of the task.*/

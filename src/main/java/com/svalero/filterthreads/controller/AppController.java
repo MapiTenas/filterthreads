@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -54,6 +55,9 @@ public class AppController implements Initializable{
     @FXML
     private Label folderPathLabel;
 
+    @FXML
+    private Button buttonOpenHistory;
+
     ObservableList<String> selectedItems;
 
     private List<File> files;
@@ -69,6 +73,21 @@ public class AppController implements Initializable{
         this.filterListView.getItems().addAll("Grayscale", "Brighter","InvertColor", "Sepia");
         this.filterListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE); //This allows to choose multiple filters. 
     } 
+
+    /*Method that opens the historic log of edits */
+    public void openHistory (ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/svalero/filterthreads/historicLogs.fxml"));
+        AnchorPane anchorPane = loader.load();
+        
+        HistoryController historyController = loader.getController();
+
+        Stage stage = new Stage();
+        stage.setScene(new Scene(anchorPane));
+        stage.setTitle("Historic logs of edits");
+
+        stage.show();
+        
+    }
 
     /*Method that is executed when we click on the Select image button*/
     @FXML

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="622.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="249.0" layoutY="44.0" prefHeight="18.0" prefWidth="124.0" text="Probando, probando!" />
+      <TableView fx:id="tableViewHistoric" layoutX="62.0" layoutY="98.0" prefHeight="260.0" prefWidth="498.0">
+        <columns>
+          <TableColumn fx:id="tableColumnPhotoName" prefWidth="151.99999618530273" text="Photo Name" />
+          <TableColumn fx:id="tableColumnFilters" prefWidth="180.00001525878906" text="Filters" />
+          <TableColumn prefWidth="166.4000244140625" text="Date &amp; Time" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

@@ -9,7 +9,7 @@ import java.util.Calendar;
 import com.opencsv.CSVWriter;
 
 public class HistoryUtils {
-    
+
     private final static String ARCHCSV = "src\\main\\resources\\com\\svalero\\filterthreads\\filterHistory.csv";
 
     public static void saveHistory(String photoName, String filters){
@@ -17,11 +17,13 @@ public class HistoryUtils {
         File file = new File(ARCHCSV); 
         try { 
             // create FileWriter & CSVWriter objects with history file
-            FileWriter outputfile = new FileWriter(file); 
+            FileWriter outputfile = new FileWriter(file, true); 
             CSVWriter writer = new CSVWriter(outputfile); 
             // add history log to csv
-            String timeNow = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-            String[] log = { photoName, filters, timeNow}; 
+            Calendar now = Calendar.getInstance();
+            SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String dateTimeFormatted = dateTimeFormat.format(now.getTime());
+            String[] log = { photoName, filters, dateTimeFormatted}; 
             writer.writeNext(log);
             // closing writer connection 
             writer.close(); 

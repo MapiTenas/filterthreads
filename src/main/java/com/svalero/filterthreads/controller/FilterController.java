@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
 import javax.imageio.ImageIO;
 
 import com.svalero.filterthreads.task.FilterTask;
+import com.svalero.filterthreads.utils.AlertsUtils;
 import com.svalero.filterthreads.utils.HistoryUtils;
 
 import javafx.concurrent.Worker;
@@ -66,6 +67,7 @@ public class FilterController implements Initializable {
             this.initialImage.setImage(image); //Here we load the original image. 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            AlertsUtils.showAlert(e.getMessage(), true);
         }
         
         try {
@@ -78,9 +80,7 @@ public class FilterController implements Initializable {
             /*States of the task. This also launch a pop up when the task has succedded successfully.*/
             filterTask.stateProperty().addListener((observableValue, oldState, newState)-> {
                if (newState == Worker.State.SUCCEEDED) {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setContentText("The filter has finished successfully.");
-                    alert.show();
+                    AlertsUtils.showAlert("The filter has finished successfully.", false);
                 }
             });
         
@@ -106,6 +106,7 @@ public class FilterController implements Initializable {
         
 
         } catch (MalformedURLException murle) {
+            AlertsUtils.showAlert(murle.getMessage(), true);
             murle.printStackTrace();
         }
     }
@@ -125,6 +126,7 @@ public class FilterController implements Initializable {
         try {
             ImageIO.write(this.outputImage, "png", file);
         } catch (IOException e) {
+            AlertsUtils.showAlert(e.getMessage(), true);
             e.printStackTrace();
         }
         

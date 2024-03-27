@@ -1,6 +1,7 @@
 package com.svalero.filterthreads;
 import java.io.IOException;
 import com.svalero.filterthreads.controller.AppController;
+import com.svalero.filterthreads.utils.AlertsUtils;
 import com.svalero.filterthreads.utils.SplashScreen;
 
 import javafx.application.Application;
@@ -45,6 +46,7 @@ public class App extends Application {
                     
                 } catch (IOException e) {
                     e.printStackTrace();
+                    AlertsUtils.showAlert(e.getMessage(), true);
                 }
             });
         }).start();

@@ -7,12 +7,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import com.svalero.filterthreads.utils.AlertsUtils;
+import com.svalero.filterthreads.utils.ImageChecker;
+
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -94,9 +98,17 @@ public class AppController implements Initializable{
         Stage stage = (Stage) this.buttonSelectImage.getScene().getWindow();
         FileChooser fc = new FileChooser();
         File file = fc.showOpenDialog(stage);
-        this.files = new ArrayList<File>();
-        this.files.add(file);
-        this.imagePathLabel.setText(file.getName());
+
+        if (file != null) { // Ensure a file was selected
+            String fileName = file.getName();
+            if (ImageChecker.imageChecker(fileName)){ // Check if it's an image file
+                this.files = new ArrayList<File>();
+                this.files.add(file);
+                this.imagePathLabel.setText(file.getName());
+            } else {
+                AlertsUtils.showAlert("Error: Selected file (" + file.getName() +") is not an image.", true);  
+            }
+        }
     }
 
     /*Method that is executed when we clic on the Select folder button */
@@ -105,8 +117,29 @@ public class AppController implements Initializable{
         Stage stage = (Stage) this.buttonSelectFolder.getScene().getWindow();
         DirectoryChooser dc = new DirectoryChooser();
         File selectedFolder = dc.showDialog(stage);
-        this.files = new ArrayList<File>(Arrays.asList(selectedFolder.listFiles()));
-        this.folderPathLabel.setText(selectedFolder.getName());
+
+        if (selectedFolder != null) { // Ensure a folder was selected
+            File[] folderFiles = selectedFolder.listFiles();
+            if (folderFiles != null && folderFiles.length > 0) { // Check if the folder is not empty
+                this.files = new ArrayList<>();
+                boolean validFilesFound = false;
+                for (File file : folderFiles) {
+                    if (file.isFile()) { // Check if it's a file
+                        if (ImageChecker.imageChecker(file.getName())) { // Check if it's an image
+                            this.files.add(file);
+                            validFilesFound = true;
+                        } else {
+                            AlertsUtils.showAlert("File '" + file.getName() + "' is not a valid image.", true);
+                        }
+                    }
+                }
+                if (validFilesFound) {
+                    this.folderPathLabel.setText(selectedFolder.getName());
+                }
+            } else {
+                AlertsUtils.showAlert("Selected folder is empty.", false);
+            }
+        }
     }
 
 
@@ -128,6 +161,8 @@ public class AppController implements Initializable{
             }
         } catch (IOException ioe) {
             ioe.printStackTrace();
+            AlertsUtils.showAlert(ioe.getMessage(), true);
         }
     }
+
 }

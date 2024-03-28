@@ -30,6 +30,8 @@ public class HistoryUtils {
             Calendar now = Calendar.getInstance();
             SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String dateTimeFormatted = dateTimeFormat.format(now.getTime());
+            filters = filters.replaceAll("\\[|\\]", "");
+
             String[] log = { photoName, filters, dateTimeFormatted}; 
             writer.writeNext(log);
             // closing writer connection 
